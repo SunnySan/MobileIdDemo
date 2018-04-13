@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>My EID</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header">
+
+					<!-- Logo -->
+						<h1><a href="index.html" id="logo">My EID <em>by Taisys</em></a></h1>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="current"><a href="index.html">Home</a></li>
+								<li><a href="myBankCard.html">My Bank Card</a></li>
+								<li><a href="myCreditCard.html">My Credit Card</a></li>
+								<li><a href="myIdCard.html">My ID Card</a></li>
+								<li>
+									<a href="#">Settings</a>
+									<ul>
+										<li><a href="changePinCode.html">Change PIN Code</a></li>
+										<li><a href="fingerprint.html">My Fingerprint</a></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+
+				</div>
+
+			<!-- Banner -->
+				<section id="banner">
+					<header>
+						<h2>My EID: <em>Bank Service, Mobile Payment, Government Service and much more...</em></h2>
+						<a id="btnSignIn" href="signIn.html" class="button" style="display:none;">Sign In</a>
+						<a id="btnStartUse" href="#" class="button" onclick="startUse();" style="display:none;">Start</a>
+					</header>
+				</section>
+
+			<!-- Highlights -->
+				<section class="wrapper style1">
+					<div id="mainContainer" class="container"><div class="row 200%" style="display:none;"><p></p></div></div>
+					<div class="container">
+						<div class="row 200%">
+							<section class="4u 12u(narrower)">
+								<a href="myBankService.html">
+									<div class="box highlight">
+										<i class="icon major fa-bank"></i>
+										<h3 style="font-size:1.6em;">Bank Service</h3>
+										<p style="font-size:1.2em;">Fund Transfer, Check Balance.</p>
+									</div>
+								</a>
+							</section>
+							<section class="4u 12u(narrower)">
+								<a href="myPaymentService.html">
+									<div class="box highlight">
+										<i class="icon major fa-credit-card"></i>
+										<h3 style="font-size:1.6em;">Mobile Payment</h3>
+										<p style="font-size:1.2em;">Credit card payment through NFC POS terminal.</p>
+									</div>
+								</a>
+							</section>
+							<section class="4u 12u(narrower)">
+								<a href="myGovernmentService.html">
+									<div class="box highlight">
+										<i class="icon major fa-file-text-o"></i>
+										<h3 style="font-size:1.6em;">Government Service</h3>
+										<p style="font-size:1.2em;">Document Signing.</p>
+									</div>
+								</a>
+							</section>
+						</div>
+					</div>
+				</section>
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI¡A½Ð°Ñ¦Òhttp://www.malsup.com/jquery/block/ -->
+
+<script>
+
+	$(function() {
+		var sPhoneNumber = "";
+		sPhoneNumber = localStorage.getItem('myPhoneNumber');
+		if (beEmpty(sPhoneNumber)){
+			$('#btnSignIn').show();
+			$('#btnStartUse').hide();
+		}else{
+			$('#btnSignIn').hide();
+			$('#btnStartUse').show();
+		}
+	});
+</script>
+
+<script>
+	function startUse(){
+		$('html, body').animate({
+			scrollTop: $("#mainContainer").offset().top
+		}, 1000);
+	}
+</script>

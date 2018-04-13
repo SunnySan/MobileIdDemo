@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>My EID</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header">
+
+					<!-- Logo -->
+						<h1><a href="index.html" id="logo">My EID <em>by Taisys</em></a></h1>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li class="current"><a href="myBankCard.html">My Bank Card</a></li>
+								<li><a href="myCreditCard.html">My Credit Card</a></li>
+								<li><a href="myIdCard.html">My ID Card</a></li>
+								<li>
+									<a href="#">Settings</a>
+									<ul>
+										<li><a href="changePinCode.html">Change PIN Code</a></li>
+										<li><a href="fingerprint.html">My Fingerprint</a></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+
+				</div>
+
+			<!-- Gigantic Heading -->
+				<section class="wrapper style2">
+					<div class="container">
+						<header class="major">
+							<h2>Please click the card picture you want to pay with.</h2>
+						</header>
+					</div>
+				</section>
+
+			<!-- Posts -->
+				<section id="secSelectCard" class="wrapper style1">
+					<div class="container">
+						<div class="row">
+							<section class="12u">
+								<div class="box post">
+									<div class="row">
+										<h3>My VISA Card</h3>
+									</div>
+									<!--<a href="#" class="image left" style="width:100%"><img src="images/creditcard01.png" alt="" /></a>-->
+									<img style="width:100%;" src="images/creditcard01.png" alt="" />
+								</div>
+							</section>
+							<section class="12u">
+								<div class="box post">
+									<div class="row">
+										<h3>My Master Card</h3>
+									</div>
+									<img style="width:100%" src="images/creditcard02.png" alt="" />
+								</div>
+							</section>
+						</div>
+					</div>
+				</section>
+
+			<!-- Posts -->
+				<section id="secInputPINCode" class="wrapper style1">
+					<div class="container">
+						<h3>Please enter PIN Code</h3>
+						<form>
+							<div class="row">
+								<div class="12u">
+									<input type="password" name="myPin" id="myPin" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="submit" class="button alt" value="Confirm" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+			<!-- Posts -->
+				<section id="secTapNFCReader" class="wrapper style1">
+					<div class="container">
+						<div class="row">
+							<section class="12u">
+								<div class="box post">
+									<div class="row">
+										<h3>Please tap on NFC POS terminal to complete the payment process.</h3>
+									</div>
+									<img style="width:100%;" src="images/NFCpayment.png" alt="" onclick="doNFCPayment();" />
+								</div>
+							</section>
+						</div>
+					</div>
+				</section>
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+<script type="text/javascript" src="js/nfchce.js"></script><!--用NFC讀卡機讀取手機模擬的HCE卡片-->
+
+<script>
+
+	$(function() {
+		app.initialize();
+		var sPhoneNumber = "";
+		sPhoneNumber = localStorage.getItem('myPhoneNumber');
+		if (beEmpty(sPhoneNumber)){
+		}else{
+		}
+	});
+	
+	function doNFCPayment(){
+		alert("try to do payment");
+		/*
+		hce.registerCommandCallback(onCommand);
+		
+		var onCommand = function(command) {
+			alert("oncommand");
+			var commandAsBytes = new Uint8Array(command);
+			var commandAsString = hce.util.byteArrayToHexString(commandAsBytes);
+			
+			var sResponse = "900001";
+			var commandResponse = hexStringToByteArray(sResponse);
+			
+			// send the response
+			hce.sendReponse(commandResponse);
+		}
+		*/
+	}
+</script>
+

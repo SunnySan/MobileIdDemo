@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>My EID</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header">
+
+					<!-- Logo -->
+						<h1><a href="index.html" id="logo">My EID <em>by Taisys</em></a></h1>
+
+					<!-- Nav -->
+						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
+						</nav>
+
+				</div>
+
+			<!-- Gigantic Heading -->
+			<!--
+				<section id="secSelectCardMessage" class="wrapper style2">
+					<div class="container">
+						<header class="major">
+							<h2>Please select Fund Transfer or Check Balance.</h2>
+						</header>
+					</div>
+				</section>
+			-->
+
+			<!-- Posts -->
+				<section id="secSelectFunction" class="wrapper style1">
+					<div class="container">
+						<div class="row">
+							<section class="12u">
+								<div class="box post">
+									<div class="row">
+										<h3>NDA Signing</h3>
+									</div>
+									<img style="width:100%;" src="images/NDA.jpg" alt="" onclick="showInputText();" />
+								</div>
+							</section>
+						</div>
+					</div>
+				</section>
+
+			<!-- Posts -->
+				<section id="secInputEmailAddress" class="wrapper style1" style="display:none;">
+					<div class="container">
+						<h3>Please enter email address to receive the signed NDA</h3>
+						<form>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="emailAddress" id="emailAddress" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="button" class="button alt" value="Confirm" onclick="doVerifyFingerprint();" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+			<!-- Posts -->
+				<section id="secInputPINCode" class="wrapper style1" style="display:none;">
+					<div class="container">
+						<h3>Please enter PIN Code</h3>
+						<form>
+							<div class="row">
+								<div class="12u">
+									<input type="password" name="myPin" id="myPin" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="button" class="button alt" value="Confirm" onclick="doConfirmPINCode();" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+
+<script>
+
+	$(function() {
+		app.initialize();
+	});
+
+	function doVerifyFingerprint(){	//使用指紋或PIN碼驗證
+		try{
+			FingerprintAuth.isAvailable(isAvailableSuccess, isAvailableError);
+		}catch(e){
+			//沒有掃描指紋的硬體，直接讓用戶輸入PIN
+			doVerifyPINCode();
+		}
+		
+		/**
+		* @return {
+		*      isAvailable:boolean,
+		*      isHardwareDetected:boolean,
+		*      hasEnrolledFingerprints:boolean
+		*   }
+		*/
+		function isAvailableSuccess(result) {
+			//alert("FingerprintAuth available: " + JSON.stringify(result));
+			if (result.isAvailable) {
+				//alert("result.isAvailable");
+				var encryptConfig = {
+					clientId: fingerprintClientID,
+					username: fingerprintUserName,
+					password: fingerprintPassword,
+					}; // See config object for required parameters 
+
+					FingerprintAuth.encrypt(encryptConfig, successCallback, errorCallback);
+					
+					function successCallback(result) {
+						//alert("successCallback(): " + JSON.stringify(result));
+						if (result.withFingerprint) {
+							//console.log("Successfully encrypted credentials.");
+							//console.log("Encrypted credentials: " + result.token);
+							doNDASigning();
+						} else if (result.withBackup) {
+							console.log("Authenticated with backup password");
+							doVerifyPINCode();
+						}
+					}
+					
+					function errorCallback(error) {
+						if (error === FingerprintAuth.ERRORS.FINGERPRINT_CANCELLED) {
+							//alert("FingerprintAuth Dialog Cancelled!");
+						} else {
+							alert("FingerprintAuth Error: " + error);
+							deleteFingerprintKey();
+						}
+						doVerifyPINCode();
+					}
+			}else if (!result.isHardwareDetected){
+				//沒有掃描指紋的硬體，直接讓用戶輸入PIN
+				doVerifyPINCode();
+			}else{	//有硬體，但尚未設定指紋
+				//alert("Please enroll your fingerprint first!");
+				doVerifyPINCode();
+			}
+		}	//function isAvailableSuccess(result) {
+ 
+ 
+		function isAvailableError(message) {
+			alert("isAvailableError(): " + message);
+			doVerifyPINCode();
+		}	//function isAvailableError(message) {
+	}	//function doVerifyFingerprint(var creditCardID){	//使用指紋或PIN碼驗證
+
+
+
+	
+	function showInputText(){
+		$('#secSelectFunction').hide();
+		$('#secInputEmailAddress').show();
+	}
+
+	function hideInputText(){
+		$('#secSelectFunction').show();
+		$('#secInputEmailAddress').hide();
+		$('#secInputPINCode').hide();
+	}
+
+	function doVerifyPINCode(){
+		$('#secSelectFunction').hide();
+		$('#secInputEmailAddress').hide();
+		$('#secInputPINCode').show();
+	}
+
+	function doConfirmPINCode(){
+		var myPin = $('#myPin').val();
+		var storedPin = localStorage.getItem('myPINCode');
+		if (beEmpty(myPin)){
+			alert("Please enter PIN Code, default is 0000");
+			return;
+		}
+		if (beEmpty(storedPin)){
+			storedPin = "0000";
+			localStorage.setItem('myPINCode', '0000');
+		}
+		if (myPin==storedPin){
+			doNDASigning();
+		}else{
+			alert("Invalid PIN Code, default is 0000");
+		}
+	}	//function doConfirmPINCode(){
+
+	function doNDASigning(){
+		var emailAddress = "";
+		emailAddress = $('#emailAddress').val();
+		if (beEmpty(emailAddress)){
+			alert("Please input Email Address!");
+			return;
+		}
+
+		var sData = "";
+		sData += "emailAddress=" + emailAddress;
+
+		getDataFromServer("ajaxDoMobileEIDSingature.jsp", sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+				alert("Unable to send NDA.");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					alert("NDA has been sent successfully!");
+					window.history.back();
+				}else{
+					alert("Failed to send NDA:<br>" + data.resultText);
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+	}
+</script>
+

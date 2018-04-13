@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>My EID</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+
+	    <!-- Bootstrap Core CSS -->
+	    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/footable.core.min.css" type="text/css" /><!--處理table的RWD/sorting/filtering，參考網頁：https://github.com/bradvin/FooTable -->
+		<link rel="stylesheet" href="css/footable.standalone.min.css" type="text/css" /><!--處理table的RWD/sorting/filtering，參考網頁：https://github.com/bradvin/FooTable -->
+
+		<style>
+			.myWrap{
+				width:100px;;
+				text-wrap:normal;
+				word-wrap: break-word;
+				overflow:hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header">
+
+					<!-- Logo -->
+						<h1><a href="index.html" id="logo">My EID <em>by Taisys</em></a></h1>
+
+					<!-- Nav -->
+						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
+						</nav>
+
+				</div>
+
+			<!-- Gigantic Heading -->
+			<!--
+				<section id="secSelectCardMessage" class="wrapper style2">
+					<div class="container">
+						<header class="major">
+							<h2>Please select Fund Transfer or Check Balance.</h2>
+						</header>
+					</div>
+				</section>
+			-->
+
+			<!-- Posts -->
+				<section id="secInputEmailAddress" class="wrapper style1">
+					<div class="container">
+						<h3>Transaction Report</h3>
+
+						<table id="tblResult" class="with-border footable" data-page-size="50" data-limit-navigation="5" style="text-shadow:none;">
+							<thead>
+								<tr>
+									<th data-class="expand">Date</th>
+									<th data-hide="phone">Type</th>
+									<th class="myWrap">Beneficiary Account</th>
+									<th>Amount</th>
+									<th data-hide="phone">Original Balance</th>
+									<th data-hide="phone">New Balance</th>
+									<th data-hide="phone">Note/Card</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+							<tfoot>
+								<tr>
+									<td colspan="12" class="text-center">
+										<ul class="pagination pagination-centered">
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+
+					</div>
+				</section>
+
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/footable.all.min.js"></script><!--處理table的RWD/sorting/filtering，參考網頁：https://github.com/bradvin/FooTable -->
+
+<script>
+
+	$(function() {
+		//app.initialize();
+		document.addEventListener("deviceready", generateReport, false);
+	});
+	
+	function generateReport(){
+		$('#tblResult').footable();
+		getTransactionReport();
+	}
+	
+</script>
+
+<script>
+	
+	function getTransactionReport(){
+		var sData = "";
+		var s = "";
+		var tmp = "";
+
+		getDataFromServer("ajaxGetTransactionReport.jsp", sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+				msgBox("Unable to get Transaction Report.");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					s = "";
+					$.each( data.records, function(i, r) {
+						tmp = "";
+						s = "<tr>";
+						s += "<td>" + r.Update_Date + "</td>";
+						s += "<td>" + r.Transaction_Type + "</td>";
+						s += "<td class='myWrap' style='width:20%;'>" + r.To_Account + "</td>";
+						s += "<td class='myMoney'>" + toCurrency(r.Amount) + "</td>";
+						if (r.Transaction_Type=="MyCard"){
+							tmp = "&nbsp;";
+							s += "<td>" + tmp + "</td>";
+							s += "<td>" + tmp + "</td>";
+						}else{
+							s += "<td class='myMoney'>" + toCurrency(r.Balance_Before) + "</td>";
+							s += "<td class='myMoney'>" + toCurrency(r.Balance_After) + "</td>";
+						}
+						tmp = r.Comment;
+						if (r.Transaction_Type=="MyCard"){
+							if (r.Comment=="creditcard01") tmp = "VISA Card";
+							if (r.Comment=="creditcard02") tmp = "Master Card";
+						}
+						s += "<td class='myWrap'>" + tmp + "</td>";
+						s += "</tr>";
+						$('#tblResult tbody').append(s);
+					});	//$.each( data.orders, function(i, r) {
+					//$('#tblResult tbody').html(s);
+					$('#tblResult tbody').trigger('footable_redraw');
+					//s = $('#tblResult tbody tr:not(.footable-filtered)').length;
+				}else{
+					msgBox("Failed to get Transaction Report:<br>" + data.resultText);
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+	}	//function getUserProfile(){
+
+</script>
