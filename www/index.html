@@ -85,6 +85,17 @@
 			speed: 1000,
 			trigger: 'click' // for slide nav
 		});
+
+		cordova.plugins.firebase.messaging.requestPermission().then(function(token) {
+			alert("APNS device token: " + token);
+		});		
+
+		cordova.plugins.firebase.messaging.onTokenRefresh(function() {
+			alert("Device token updated");
+			cordova.plugins.firebase.messaging.getToken().then(function(token) {
+				setLocalValue("fcmToken", token);
+			});
+		});
 	});
 
 	function doVerifyFingerprint(){	//使用指紋或PIN碼驗證
