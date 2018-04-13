@@ -73,10 +73,10 @@
 		//var windowHeight = $(window).height();
 		var windowWidth = window.screen.width * window.devicePixelRatio;
 		var windowHeight = window.screen.height * window.devicePixelRatio;
-		alert(windowWidth);
-		alert(windowHeight);
 		$('#slider').height(windowWidth/2);
 		windowHeight = (windowHeight - (windowWidth/2))/2;
+		alert(windowWidth/2);
+		alert(windowHeight);
 		$('.menuItem').width(windowWidth/2);
 		$('.menuItem').height(windowHeight);
 		$('#slider').slider({
