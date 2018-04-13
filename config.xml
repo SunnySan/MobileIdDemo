@@ -21,7 +21,7 @@
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <resource-file src="google-services.json" target="/google-services.json" />
+        <resource-file src="google-services.json" target="/app/google-services.json" />
     </platform>
     <plugin name="cordova-plugin-fcm" source="npm" spec="~2.1.2" />
 	<platform name="android">
