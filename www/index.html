@@ -68,8 +68,10 @@
 <script>
 
 	$(function() {
-		var windowWidth = $(window).width();
-		var windowHeight = $(window).height();
+		//var windowWidth = $(window).width();
+		//var windowHeight = $(window).height();
+		var windowWidth = window.screen.width * window.devicePixelRatio;
+		var windowHeight = window.screen.height * window.devicePixelRatio;
 		$('#slider').height(windowWidth/2);
 		windowHeight = (windowHeight - (windowWidth/2))/2;
 		$('.menuItem').width(windowWidth/2);
