@@ -19,8 +19,7 @@
     <plugin name="cordova-plugin-console" source="npm" spec="~1.0.3" />
     <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.1" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
-    <plugin name="cordova-support-google-services" source="npm" spec="~1.1.0" />
-    <plugin name="cordova-plugin-firebase-messaging" source="npm" spec="~0.13.0" FIREBASE_VERSION="11.0.+" />
+    <plugin name="cordova-plugin-firebase-messaging" source="npm" spec="~0.13.0" />
 	<platform name="android">
 		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
 		<icon density="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
