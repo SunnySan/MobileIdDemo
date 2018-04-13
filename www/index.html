@@ -68,6 +68,7 @@
 <script>
 
 	$(function() {
+		app.initialize();
 		//var windowWidth = $(window).width();
 		//var windowHeight = $(window).height();
 		var windowWidth = window.screen.width * window.devicePixelRatio;
@@ -85,7 +86,6 @@
 			speed: 1000,
 			trigger: 'click' // for slide nav
 		});
-		app.initialize();
 	});
 
 	function doVerifyFingerprint(){	//使用指紋或PIN碼驗證
