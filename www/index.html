@@ -86,16 +86,46 @@
 			trigger: 'click' // for slide nav
 		});
 
-		cordova.plugins.firebase.messaging.requestPermission().then(function(token) {
-			alert("APNS device token: " + token);
-		});		
 
-		cordova.plugins.firebase.messaging.onTokenRefresh(function() {
-			alert("Device token updated");
-			cordova.plugins.firebase.messaging.getToken().then(function(token) {
-				setLocalValue("fcmToken", token);
-			});
+
+
+
+
+
+		const push = PushNotification.init({
+			android: {
+			},
+		    browser: {
+		        pushServiceURL: 'http://push.api.phonegap.com/v1/push'
+		    },
+			ios: {
+				alert: "true",
+				badge: "true",
+				sound: "true"
+			},
+			windows: {}
 		});
+		
+		push.on('registration', (data) => {
+			// data.registrationId
+			alert("registration" + data.registrationId);
+		});
+		
+		push.on('notification', (data) => {
+			// data.message,
+			// data.title,
+			// data.count,
+			// data.sound,
+			// data.image,
+			// data.additionalData
+		});
+		
+		push.on('error', (e) => {
+			alert("error" + e.message);
+		});
+
+
+
 	});
 
 	function doVerifyFingerprint(){	//使用指紋或PIN碼驗證
