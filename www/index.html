@@ -25,21 +25,21 @@
 					<div><img src="images/banner_tw_03.jpg" alt="Picture 3"></div>
 				</div>
 			</div>
-			<table>
-				<tr>
-					<td class="menuItem">
-						<img src="images/menu_registration_us.png" alt="" onclick="showInputText0('1');" />
+			<table style="margin:0px;padding:0px;">
+				<tr style="margin:0px;padding:0px;">
+					<td style="margin:0px;padding:0px;">
+						<img class="menuItem" src="images/menu_registration_us.png" alt="" onclick="showInputText0('1');" />
 					</td>
-					<td class="menuItem">
-						<img src="images/menu_certificate_us.png" alt="" onclick="showInputText0('1');" />
+					<td style="margin:0px;padding:0px;">
+						<img class="menuItem" src="images/menu_certificate_us.png" alt="" onclick="showInputText0('1');" />
 					</td>
 				</tr>
-				<tr>
-					<td class="menuItem">
-						<img src="images/menu_report_us.png" alt="" onclick="showInputText0('1');" />
+				<tr style="margin:0px;padding:0px;">
+					<td style="margin:0px;padding:0px;">
+						<img class="menuItem" src="images/menu_report_us.png" alt="" onclick="showInputText0('1');" />
 					</td>
-					<td class="menuItem">
-						<img src="images/menu_pin_us.png" alt="" onclick="showInputText0('1');" />
+					<td style="margin:0px;padding:0px;">
+						<img class="menuItem" src="images/menu_pin_us.png" alt="" onclick="showInputText0('1');" />
 					</td>
 				</tr>
 			</table>
@@ -70,12 +70,16 @@
 
 	$(function() {
 		//app.initialize();
-		//var windowWidth = $(window).width();
-		//var windowHeight = $(window).height();
-		var windowWidth = window.screen.width * window.devicePixelRatio;
-		var windowHeight = window.screen.height * window.devicePixelRatio;
+		var windowWidth = $(window).width();
+		var windowHeight = $(window).height();
+		//var windowWidth = window.screen.width * window.devicePixelRatio;
+		//var windowHeight = window.screen.height * window.devicePixelRatio;
+		//alert(windowWidth);
+		//alert(windowHeight);
 		$('#slider').height(windowWidth/2);
 		windowHeight = (windowHeight - (windowWidth/2))/2;
+		//alert(windowWidth/2);
+		//alert(windowHeight);
 		$('.menuItem').width(windowWidth/2);
 		$('.menuItem').height(windowHeight);
 		$('#slider').slider({
