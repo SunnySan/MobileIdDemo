@@ -78,7 +78,7 @@ var app = {
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
-                window.plugins.toast.show('Push Notification token updated!', 'short', 'bottom', function(a){console.log('Sunny: toast success: ' + a)}, function(b){alert('Sunny: toast error: ' + b)})"
+                window.plugins.toast.show('Push Notification token updated!', 'short', 'bottom', function(a){console.log('Sunny: toast success: ' + a)}, function(b){alert('Sunny: toast error: ' + b)});
                 // Post registrationId to your app server as the value has changed
             }
 		});
