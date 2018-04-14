@@ -35,7 +35,12 @@ var app = {
     onDeviceReady: function() {
         console.log('Sunny: Received Device Ready Event');
         console.log('Sunny: calling setup push');
-        app.setupPush();
+        if (typeof PushNotification == "undefined"){
+	        console.log('Sunny: PushNotification is undefined ');
+        }else{
+	        console.log('Sunny: PushNotification object is loaded ');
+	        app.setupPush();
+        }
     },
     setupPush: function() {
         console.log('Sunny: calling push init');
