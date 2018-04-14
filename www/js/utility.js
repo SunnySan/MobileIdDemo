@@ -1,29 +1,7 @@
 /**********這個檔案裡是一些公用的函數**********/
 
 /**********全域變數**********/
-var sServerBaseURL = "http://cms.gslssd.com/MyEIDServer/";	//Server端接收 request 的 URL 路徑
-
-var fingerprintClientID = "MyEID2";
-var fingerprintUserName = "886986123101";
-var fingerprintPassword = "0000";
-
-
-/**********刪除 Android key store中這個應用程式的資料**********/
-function deleteFingerprintKey(){
-	FingerprintAuth.delete({
-		clientId: fingerprintClientID,
-		username: fingerprintUserName,
-		password: fingerprintPassword
-	}, successCallback, errorCallback);
-	
-	function successCallback(result) {
-		console.log("Successfully deleted cipher: " + JSON.stringify(result));
-	}
-	
-	function errorCallback(error) {
-		console.log(error);
-	}
-}	//function deleteFingerprintKey(){
+var sServerBaseURL = "http://cms.gslssd.com/MobileIdServer/";	//Server端接收 request 的 URL 路徑
 
 /**********取得 server API 的 base URL**********/
 function getServerBaseURL(){

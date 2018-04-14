@@ -21,7 +21,7 @@
 				<div id="newHeader" style="padding-left:20px;padding-right:20px;">
 
 					<!-- Logo -->
-						<h1 style="text-align:center;">Change PIN Code</h1>
+						<h1 style="text-align:center;">Certificate Registration</h1>
 
 					<!-- Nav -->
 						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
@@ -44,22 +44,16 @@
 				<section id="secInputEmailAddress" class="wrapper style1">
 					<div class="container">
 						<form>
-							<h3>Old PIN Code</h3>
+							<h3>Please enter your ID card/phone number (*)</h3>
 							<div class="row">
 								<div class="12u">
-									<input type="password" name="oldPIN" id="oldPIN" maxlength="12" />
+									<input type="text" name="idCardNumber" id="idCardNumber" maxlength="20" />
 								</div>
 							</div>
-							<h3>New PIN Code</h3>
+							<h3>Please enter PIN code of Mobile ID (*)</h3>
 							<div class="row">
 								<div class="12u">
-									<input type="password" name="newPIN1" id="newPIN1" maxlength="12" />
-								</div>
-							</div>
-							<h3>Re-Enter PIN Code</h3>
-							<div class="row">
-								<div class="12u">
-									<input type="password" name="newPIN2" id="newPIN2" maxlength="12" />
+									<input type="password" name="pinCode" id="pinCode" maxlength="12" />
 								</div>
 							</div>
 							<div class="row">
@@ -104,29 +98,49 @@
 	});
 	
 	function doConfirm(){
-		var oldPIN = $('#oldPIN').val();
-		var newPIN1 = $('#newPIN1').val();
-		var newPIN2 = $('#newPIN2').val();
-
-		if (beEmpty(oldPIN) || beEmpty(newPIN1) || beEmpty(newPIN2)){
-            navigator.notification.alert("Please input PIN Codes!", null, "System Message", "OK");
+		var fcmToken = localStorage.getItem('registrationId');
+		if (beEmpty(fcmToken)){
+            navigator.notification.alert("Cannot not find Push Notification ID, please uninstall and re-install this APP!", null, "System Message", "OK");
 			return;
 		}
-		if (newPIN1!=newPIN2){
-            navigator.notification.alert("Two new PIN Codes are not equal!", null, "System Message", "OK");
+
+		var idCardNumber = $('#idCardNumber').val();
+		var pinCode = $('#pinCode').val();
+
+		if (beEmpty(idCardNumber) || beEmpty(pinCode)){
+            navigator.notification.alert("Please input required fields!", null, "System Message", "OK");
 			return;
 		}
 
 		var storedPin = localStorage.getItem('myPINCode');
 		if (beEmpty(storedPin)) storedPin = "111111";
 		
-		if (oldPIN!=storedPin){
-            navigator.notification.alert("Old PIN Code is incorrect, default is 111111!", null, "System Message", "OK");
+		if (pinCode!=storedPin){
+            navigator.notification.alert("PIN Code is incorrect, default is 111111!", null, "System Message", "OK");
 			return;
 		}
-		
-		localStorage.setItem('myPINCode', newPIN1);
-		window.plugins.toast.show('PIN code has been changed!', 'short', 'bottom', function(a){window.history.back();}, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
+
+		window.plugins.toast.show('Please wait...', 'short', 'bottom', null, null);
+
+		var sData = "";
+		sData += "iccid=" + "phonegap";
+		sData += "&idCardNumber=" + idCardNumber;
+		sData += "&fcmToken=" + fcmToken;
+
+		getDataFromServer("ajaxDoCardRegistration.jsp", sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+	            navigator.notification.alert("Unable to get process result!", null, "System Message", "OK");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					window.plugins.toast.show('The job is successfully processed!', 'long', 'bottom', function(a){window.history.back();}, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
+				}else{
+		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+
 	}
 </script>
 
