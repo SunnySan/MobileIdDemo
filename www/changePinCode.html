@@ -109,7 +109,8 @@
 		var newPIN2 = $('#newPIN2').val();
 
 		if (beEmpty(oldPIN) || beEmpty(newPIN1) || beEmpty(newPIN2)){
-			alert("Please input PIN Codes!");
+            navigator.notification.alert("Please input PIN Codes!", null, "System Message", "OK");
+			//alert("Please input PIN Codes!");
 			return;
 		}
 		if (newPIN1!=newPIN2){
