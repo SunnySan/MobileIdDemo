@@ -69,7 +69,6 @@
 <script>
 
 	$(function() {
-		//app.initialize();
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 		$('#slider').height(windowWidth/2);
@@ -86,49 +85,13 @@
 			trigger: 'click' // for slide nav
 		});
 
+		app.initialize();
 
 
 
 
 
-		PushNotification.hasPermission(data => {
-			if (data.isEnabled) {
-				alert("has Permission");
-			}else{
-				alert("NO Permission");
-			}
-		});
-		const push = PushNotification.init({
-			android: {
-			},
-		    browser: {
-		        pushServiceURL: 'http://push.api.phonegap.com/v1/push'
-		    },
-			ios: {
-				alert: "true",
-				badge: "true",
-				sound: "true"
-			},
-			windows: {}
-		});
-		
-		push.on('registration', (data) => {
-			// data.registrationId
-			alert("registration" + data.registrationId);
-		});
-		
-		push.on('notification', (data) => {
-			// data.message,
-			// data.title,
-			// data.count,
-			// data.sound,
-			// data.image,
-			// data.additionalData
-		});
-		
-		push.on('error', (e) => {
-			alert("error" + e.message);
-		});
+
 
 
 
