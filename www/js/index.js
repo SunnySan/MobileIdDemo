@@ -48,10 +48,10 @@ var app = {
 		PushNotification.hasPermission(data => {
 			if (data.isEnabled) {
 		        console.log('Sunny: has Permission');
-				alert("has Permission");
+				//alert("has Permission");
 			}else{
 		        console.log('Sunny: NO Permission');
-				alert("NO Permission");
+				//alert("NO Permission");
 			}
 		});
 		const push = PushNotification.init({
@@ -70,7 +70,7 @@ var app = {
 		
 		push.on('registration', (data) => {
 			// data.registrationId
-			alert("registration" + data.registrationId);
+			//alert("registration" + data.registrationId);
             console.log('Sunny:¡@registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
@@ -88,7 +88,7 @@ var app = {
 			// data.sound,
 			// data.image,
 			// data.additionalData
-            console.log('Sunny: notification event');
+            console.log('Sunny: notification event, data.message=' + data.message + ', data.title=' + data.title + ', data.count=' + data.count + ', data.additionalData.foreground=' + data.additionalData.foreground + ', data.additionalData.coldstart=' + data.additionalData.coldstart + ', data.additionalData.dismissed=' + data.additionalData.dismissed);
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
