@@ -47,30 +47,30 @@
 							<h3>Old PIN Code</h3>
 							<div class="row">
 								<div class="12u">
-									<input type="text" name="oldPIN" id="oldPIN" />
+									<input type="password" name="oldPIN" id="oldPIN" maxlength="12" />
 								</div>
 							</div>
 							<h3>New PIN Code</h3>
 							<div class="row">
 								<div class="12u">
-									<input type="text" name="newPIN1" id="newPIN1" />
+									<input type="text" name="newPIN1" id="newPIN1" maxlength="12" />
 								</div>
 							</div>
 							<h3>Re-Enter PIN Code</h3>
 							<div class="row">
 								<div class="12u">
-									<input type="text" name="newPIN2" id="newPIN2" />
+									<input type="text" name="newPIN2" id="newPIN2" maxlength="12" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="6u">
 									<ul class="actions">
-										<li><input type="button" class="button alt" value="Confirm" onclick="doConfirm();" /></li>
+										<li><input type="button" class="button alt" style="padding-right:10px;" value="Confirm" onclick="doConfirm();" /></li>
 									</ul>
 								</div>
 								<div class="6u">
 									<ul class="actions">
-										<li><input type="button" class="button alt" value="Cancel" onclick="window.history.back();" /></li>
+										<li><input type="button" class="button alt" style="padding-right:10px;" value="Cancel" onclick="window.history.back();" /></li>
 									</ul>
 								</div>
 							</div>
@@ -118,6 +118,8 @@
 		}
 
 		var storedPin = localStorage.getItem('myPINCode');
+		if (beEmpty(storedPin)) storedPin = "111111";
+		
 		if (oldPIN!=storedPin){
 			alert("Old PIN Code is incorrect, default is 111111!");
 			return;
