@@ -2829,7 +2829,7 @@
 				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				padding-bottom: 1px;
-				padding-top: 44px;
+				padding-top: 10px;
 			}
 
 			#titleBar {
@@ -3133,7 +3133,7 @@
 		/* Wrapper */
 
 			.wrapper {
-				padding: 2em 20px 1px 20px;
+				padding: 1em 20px 1px 20px;
 			}
 
 		/* CTA */
