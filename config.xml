@@ -20,6 +20,7 @@
     <plugin name="cordova-plugin-console" source="npm" spec="~1.0.3" />
     <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.1" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
+    <plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.2" />
     <platform name="android">
         <allow-intent href="market:*" />
         <resource-file src="google-services.json" target="/google-services.json" />
