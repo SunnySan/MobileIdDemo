@@ -110,11 +110,10 @@
 
 		if (beEmpty(oldPIN) || beEmpty(newPIN1) || beEmpty(newPIN2)){
             navigator.notification.alert("Please input PIN Codes!", null, "System Message", "OK");
-			//alert("Please input PIN Codes!");
 			return;
 		}
 		if (newPIN1!=newPIN2){
-			alert("Two new PIN Codes are not equal!");
+            navigator.notification.alert("Two new PIN Codes are not equal!", null, "System Message", "OK");
 			return;
 		}
 
@@ -122,12 +121,12 @@
 		if (beEmpty(storedPin)) storedPin = "111111";
 		
 		if (oldPIN!=storedPin){
-			alert("Old PIN Code is incorrect, default is 111111!");
+            navigator.notification.alert("Old PIN Code is incorrect, default is 111111!", null, "System Message", "OK");
 			return;
 		}
 		
 		localStorage.setItem('myPINCode', newPIN1);
-		window.plugins.toast.show('PIN code has been changed!', 'short', 'bottom', null, function(b){alert('PIN code has been changed!')});
+		window.plugins.toast.show('PIN code has been changed!', 'short', 'bottom', null, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
 		window.history.back();
 	}
 </script>
