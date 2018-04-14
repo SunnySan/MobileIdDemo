@@ -90,12 +90,15 @@ var app = {
 			// data.image,
 			// data.additionalData
             console.log('Sunny: notification event, data.message=' + data.message + ', data.title=' + data.title + ', data.count=' + data.count + ', data.additionalData.foreground=' + data.additionalData.foreground + ', data.additionalData.coldstart=' + data.additionalData.coldstart + ', data.additionalData.dismissed=' + data.additionalData.dismissed);
+            /*
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
                 data.title,           // title
                 'Ok'                  // buttonName
             );
+            */
+            window.location.href = "CheckBalance.html";
 		});
 		
 		push.on('error', (e) => {
