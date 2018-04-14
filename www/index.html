@@ -91,7 +91,13 @@
 
 
 
-
+		PushNotification.hasPermission(data => {
+			if (data.isEnabled) {
+				alert("has Permission");
+			}else{
+				alert("NO Permission");
+			}
+		});
 		const push = PushNotification.init({
 			android: {
 			},
