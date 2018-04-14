@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>My EID</title>
+		<title>Mobile ID Demo</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -21,7 +21,7 @@
 				<div id="header">
 
 					<!-- Logo -->
-						<h1><a href="index.html" id="logo">My EID <em>by Taisys</em></a></h1>
+						<h1>Change PIN Code</h1>
 
 					<!-- Nav -->
 						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
@@ -63,9 +63,14 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="12u">
+								<div class="6u">
 									<ul class="actions">
 										<li><input type="button" class="button alt" value="Confirm" onclick="doConfirm();" /></li>
+									</ul>
+								</div>
+								<div class="6u">
+									<ul class="actions">
+										<li><input type="button" class="button alt" value="Cancel" onclick="window.history.back();" /></li>
 									</ul>
 								</div>
 							</div>
@@ -95,14 +100,14 @@
 <script>
 
 	$(function() {
-		app.initialize();
+		//app.initialize();
 	});
 	
 	function doConfirm(){
 		var oldPIN = $('#oldPIN').val();
 		var newPIN1 = $('#newPIN1').val();
 		var newPIN2 = $('#newPIN2').val();
-		emailAddress = $('#emailAddress').val();
+
 		if (beEmpty(oldPIN) || beEmpty(newPIN1) || beEmpty(newPIN2)){
 			alert("Please input PIN Codes!");
 			return;
@@ -114,12 +119,12 @@
 
 		var storedPin = localStorage.getItem('myPINCode');
 		if (oldPIN!=storedPin){
-			alert("Old PIN Code is incorrect, default is 0000!");
+			alert("Old PIN Code is incorrect, default is 111111!");
 			return;
 		}
 		
 		localStorage.setItem('myPINCode', newPIN1);
-		alert("Success!");
+		window.plugins.toast.show('PIN code has been changed!', 'short', 'bottom', null, function(b){alert('PIN code has been changed!')});
 		window.history.back();
 	}
 </script>
