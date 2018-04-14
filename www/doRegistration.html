@@ -95,6 +95,8 @@
 
 	$(function() {
 		//app.initialize();
+		var idCardNumber = localStorage.getItem('idCardNumber');
+		if (notEmpty(idCardNumber)) $('#idCardNumber').val(idCardNumber);
 	});
 	
 	function doConfirm(){
@@ -120,8 +122,6 @@
 			return;
 		}
 
-		window.plugins.toast.show('Please wait...', 'short', 'bottom', null, null);
-
 		var sData = "";
 		sData += "iccid=" + "phonegap";
 		sData += "&idCardNumber=" + idCardNumber;
@@ -129,12 +129,15 @@
 
 		getDataFromServer("ajaxDoCardRegistration.jsp", sData, "json", function(data){
 			if (!data.resultCode || !data.resultText){
+				localStorage.setItem('idCardNumber', '');
 	            navigator.notification.alert("Unable to get process result!", null, "System Message", "OK");
 				return;
 			}else{
 				if (data.resultCode=="00000"){
+					localStorage.setItem('idCardNumber', idCardNumber);
 					window.plugins.toast.show('The job is successfully processed!', 'long', 'bottom', function(a){window.history.back();}, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
 				}else{
+					localStorage.setItem('idCardNumber', '');
 		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");
 				}
 			}
