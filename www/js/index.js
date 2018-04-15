@@ -99,7 +99,19 @@ var app = {
                 'Ok'                  // buttonName
             );
             */
-            window.location.href = "CheckBalance.html";
+            var i = data.message.indexOf(";");
+            if (i>0){
+            	var s = data.message.substring(i);
+	            console.log('Sunny: notification request data=' + s);
+	            window.location.href = "CheckBalance.html?" + s;
+            }else{
+	            navigator.notification.alert(
+	                data.message,         // message
+	                null,                 // callback
+	                data.title,           // title
+	                'Ok'                  // buttonName
+	            );
+            }
 		});
 		
 		push.on('error', (e) => {

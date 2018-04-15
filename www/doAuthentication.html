@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Mobile ID Demo</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="newHeader" style="padding-left:20px;padding-right:20px;">
+
+					<!-- Logo -->
+						<h1 style="text-align:center;">Certificate Registration</h1>
+
+					<!-- Nav -->
+						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
+						</nav>
+
+				</div>
+
+			<!-- Gigantic Heading -->
+			<!--
+				<section id="secSelectCardMessage" class="wrapper style2">
+					<div class="container">
+						<header class="major">
+							<h2>Please select Fund Transfer or Check Balance.</h2>
+						</header>
+					</div>
+				</section>
+			-->
+
+			<!-- Posts -->
+				<section id="secInputEmailAddress" class="wrapper style1">
+					<div class="container">
+						<form>
+							<h3>Please enter your ID card/phone number (*)</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="idCardNumber" id="idCardNumber" maxlength="20" />
+								</div>
+							</div>
+							<h3>Please enter PIN code of Mobile ID (*)</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="password" name="pinCode" id="pinCode" maxlength="12" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="button" class="button alt" value="Confirm" onclick="doConfirm();" /></li>
+									</ul>
+								</div>
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="button" class="button alt" value="Cancel" onclick="window.history.back();" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+
+<script>
+
+	$(function() {
+		//app.initialize();
+		var idCardNumber = localStorage.getItem('idCardNumber');
+		if (notEmpty(idCardNumber)) $('#idCardNumber').val(idCardNumber);
+	});
+	
+	function doConfirm(){
+		var fcmToken = localStorage.getItem('registrationId');
+		if (beEmpty(fcmToken)){
+            navigator.notification.alert("Cannot not find Push Notification ID, please uninstall and re-install this APP!", null, "System Message", "OK");
+			return;
+		}
+
+		var idCardNumber = $('#idCardNumber').val();
+		var pinCode = $('#pinCode').val();
+
+		if (beEmpty(idCardNumber) || beEmpty(pinCode)){
+            navigator.notification.alert("Please input required fields!", null, "System Message", "OK");
+			return;
+		}
+
+		var storedPin = localStorage.getItem('myPINCode');
+		if (beEmpty(storedPin)) storedPin = "111111";
+		
+		if (pinCode!=storedPin){
+            navigator.notification.alert("PIN Code is incorrect, default is 111111!", null, "System Message", "OK");
+			return;
+		}
+
+		var sData = "";
+		sData += "iccid=" + "phonegap";
+		sData += "&idCardNumber=" + idCardNumber;
+		sData += "&fcmToken=" + fcmToken;
+
+		getDataFromServer("ajaxDoCardRegistration.jsp", sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+				localStorage.setItem('idCardNumber', '');
+	            navigator.notification.alert("Unable to get process result!", null, "System Message", "OK");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					localStorage.setItem('idCardNumber', idCardNumber);
+					window.plugins.toast.show('The job is successfully processed!', 'long', 'bottom', function(a){window.history.back();}, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
+				}else{
+					localStorage.setItem('idCardNumber', '');
+		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+
+	}
+</script>
+
