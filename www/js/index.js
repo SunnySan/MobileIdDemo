@@ -101,7 +101,7 @@ var app = {
             */
             var i = data.message.indexOf(";");
             if (i>0){
-            	var s = data.message.substring(i);
+            	var s = data.message.substring(i + 1);
 	            console.log('Sunny: notification request data=' + s);
 	            window.location.href = "CheckBalance.html?" + s;
             }else{

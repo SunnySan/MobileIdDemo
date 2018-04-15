@@ -21,7 +21,7 @@
 				<div id="newHeader" style="padding-left:20px;padding-right:20px;">
 
 					<!-- Logo -->
-						<h1 style="text-align:center;">Certificate Registration</h1>
+						<h1 style="text-align:center;">Service Authentication</h1>
 
 					<!-- Nav -->
 						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
@@ -44,12 +44,9 @@
 				<section id="secInputEmailAddress" class="wrapper style1">
 					<div class="container">
 						<form>
-							<h3>Please enter your ID card/phone number (*)</h3>
-							<div class="row">
-								<div class="12u">
-									<input type="text" name="idCardNumber" id="idCardNumber" maxlength="20" />
-								</div>
-							</div>
+							<h3>Company name: <span id="sCompanyName"></span></h3>
+							<h3>Service name: <span id="sServiceName"></span></h3>
+							<h3>Message: <span id="sMessage"></span></h3>
 							<h3>Please enter PIN code of Mobile ID (*)</h3>
 							<div class="row">
 								<div class="12u">
@@ -92,11 +89,30 @@
 <script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
 
 <script>
+	var Transaction_ID = "";
+	var Company_Name = "";
+	var Service_Name = "";
+	var Message_Content = "";
+	var Action = "";
+	var idCardNumber = "";
 
 	$(function() {
 		//app.initialize();
+		Transaction_ID = getParameterByName("Transaction_ID");
+		Company_Name = getParameterByName("Company_Name");
+		Service_Name = getParameterByName("Service_Name");
+		Message_Content = getParameterByName("Message_Content");
+		Action = getParameterByName("Action");
 		var idCardNumber = localStorage.getItem('idCardNumber');
-		if (notEmpty(idCardNumber)) $('#idCardNumber').val(idCardNumber);
+		if (beEmpty(idCardNumber)){
+			navigator.notification.alert("Unable to find your ID card or phone number, please register your certificate first!", function(){window.history.back();}, "System Message", "OK");
+		}
+		if (beEmpty(Transaction_ID)){
+			navigator.notification.alert("Unable to get authentication information, will quit this process!", function(){window.history.back();}, "System Message", "OK");
+		}
+		$('#sCompanyName').text(Company_Name);
+		$('#sServiceName').text(Service_Name);
+		$('#sMessage').text(Message_Content);
 	});
 	
 	function doConfirm(){
