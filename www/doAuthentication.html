@@ -95,6 +95,7 @@
 	var Message_Content = "";
 	var Action = "";
 	var idCardNumber = "";
+	var Result = "";
 
 	$(function() {
 		//app.initialize();
@@ -116,12 +117,13 @@
 	});
 	
 	function doConfirm(sResult){
+		Result = sResult;
 		window.plugins.toast.show('Creating signature in progress...', 'short', 'bottom', null, null);
 		setTimeout(
-			doConfirm2(sResult);
-		}, 1000);
+			doConfirm2
+		, 1000);
 	}
-	function doConfirm2(sResult){
+	function doConfirm2(){
 		var pinCode = $('#pinCode').val();
 
 		var storedPin = localStorage.getItem('myPINCode');
@@ -134,7 +136,7 @@
 
 		var sData = "";
 		sData += "TransactionID=" + Transaction_ID;
-		sData += "&TransactionResult=" + sResult;
+		sData += "&TransactionResult=" + Result;
 		sData += "&ICCID=" + "phonegap";
 		sData += "&IdCardNumber=" + idCardNumber;
 
