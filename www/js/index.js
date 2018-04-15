@@ -103,7 +103,7 @@ var app = {
             if (i>0){
             	var s = data.message.substring(i + 1);
 	            console.log('Sunny: notification request data=' + s);
-	            window.location.href = "CheckBalance.html?" + s;
+	            window.location.href = "doAuthentication.html?" + s;
             }else{
 	            navigator.notification.alert(
 	                data.message,         // message
