@@ -56,12 +56,12 @@
 							<div class="row">
 								<div class="12u">
 									<ul class="actions">
-										<li><input type="button" class="button alt" value="Confirm" onclick="doConfirm();" /></li>
+										<li><input type="button" class="button alt" value="Confirm" onclick="doConfirm("00000");" /></li>
 									</ul>
 								</div>
 								<div class="12u">
 									<ul class="actions">
-										<li><input type="button" class="button alt" value="Cancel" onclick="window.history.back();" /></li>
+										<li><input type="button" class="button alt" value="Cancel" onclick="doConfirm("99999");" /></li>
 									</ul>
 								</div>
 							</div>
@@ -115,20 +115,14 @@
 		$('#sMessage').text(Message_Content);
 	});
 	
-	function doConfirm(){
-		var fcmToken = localStorage.getItem('registrationId');
-		if (beEmpty(fcmToken)){
-            navigator.notification.alert("Cannot not find Push Notification ID, please uninstall and re-install this APP!", null, "System Message", "OK");
-			return;
-		}
-
-		var idCardNumber = $('#idCardNumber').val();
+	function doConfirm(sResult){
+		window.plugins.toast.show('Creating signature in progress...', 'short', 'bottom', null, null);
+		setTimeout(
+			doConfirm2(sResult);
+		}, 1000);
+	}
+	function doConfirm2(sResult){
 		var pinCode = $('#pinCode').val();
-
-		if (beEmpty(idCardNumber) || beEmpty(pinCode)){
-            navigator.notification.alert("Please input required fields!", null, "System Message", "OK");
-			return;
-		}
 
 		var storedPin = localStorage.getItem('myPINCode');
 		if (beEmpty(storedPin)) storedPin = "111111";
@@ -139,21 +133,19 @@
 		}
 
 		var sData = "";
-		sData += "iccid=" + "phonegap";
-		sData += "&idCardNumber=" + idCardNumber;
-		sData += "&fcmToken=" + fcmToken;
+		sData += "TransactionID=" + Transaction_ID;
+		sData += "&TransactionResult=" + sResult;
+		sData += "&ICCID=" + "phonegap";
+		sData += "&IdCardNumber=" + idCardNumber;
 
-		getDataFromServer("ajaxDoCardRegistration.jsp", sData, "json", function(data){
+		getDataFromServer("ajaxTransactionResultReceiver.jsp", sData, "json", function(data){
 			if (!data.resultCode || !data.resultText){
-				localStorage.setItem('idCardNumber', '');
 	            navigator.notification.alert("Unable to get process result!", null, "System Message", "OK");
 				return;
 			}else{
 				if (data.resultCode=="00000"){
-					localStorage.setItem('idCardNumber', idCardNumber);
 					window.plugins.toast.show('The job is successfully processed!', 'long', 'bottom', function(a){window.history.back();}, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
 				}else{
-					localStorage.setItem('idCardNumber', '');
 		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");
 				}
 			}
