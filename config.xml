@@ -26,6 +26,9 @@
 	<platform name="ios">
 		<resource-file src="GoogleService-Info.plist" />
 	</platform>
+	<config-file platform="ios"  parent="aps-environment">
+		<string>development</string>
+	</config-file>
     <plugin name="phonegap-plugin-push" spec="2.0.0" >
     	<param name="SENDER_ID" value="99999"/>
     </plugin>
