@@ -106,16 +106,22 @@ var app = {
 	            window.location.href = "doAuthentication.html?" + s;
             }else{
 	            navigator.notification.alert(
-	                data.message,         // message
-	                null,                 // callback
-	                data.title,           // title
-	                'Ok'                  // buttonName
+	                data.message,		// message
+	                null,				// callback
+	                data.title,			// title
+	                'Ok'				// buttonName
 	            );
             }
 		});
 		
 		push.on('error', (e) => {
-			alert("error" + e.message);
+            navigator.notification.alert(
+                e.message,			// message
+                null,				// callback
+                'System alert',		// title
+                'Ok'				// buttonName
+            );
+			//alert("error" + e.message);
 		});
 
         console.log('Sunny: after init');
