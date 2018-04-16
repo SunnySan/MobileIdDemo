@@ -135,11 +135,11 @@
 					var Cert_Create_Date = data.Cert_Create_Date;
 					var Cert_End_Date = data.Cert_End_Date;
 					var Status = data.Status;
-					$('#Cert_Serial_Number').value(Cert_Serial_Number);
-					$('#Cert_Owner').value(Cert_Owner);
-					$('#Cert_Create_Date').value(Cert_Create_Date);
-					$('#Cert_End_Date').value(Cert_End_Date);
-					$('#Status').value(Status);
+					$('#Cert_Serial_Number').val(Cert_Serial_Number);
+					$('#Cert_Owner').val(Cert_Owner);
+					$('#Cert_Create_Date').val(Cert_Create_Date);
+					$('#Cert_End_Date').val(Cert_End_Date);
+					$('#Status').val(Status);
 				}else{
 					localStorage.setItem('idCardNumber', '');
 		            navigator.notification.alert("Fail to get certificate information: " + data.resultText, null, "System Message", "OK");
