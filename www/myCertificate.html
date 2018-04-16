@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Mobile ID Demo</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="newHeader" style="padding-left:20px;padding-right:20px;">
+
+					<!-- Logo -->
+						<h1 style="text-align:center;">My Certificate</h1>
+
+					<!-- Nav -->
+						<nav id="nav"><!--在 assets\js\main.js 裡面設定-->
+						</nav>
+
+				</div>
+
+			<!-- Gigantic Heading -->
+			<!--
+				<section id="secSelectCardMessage" class="wrapper style2">
+					<div class="container">
+						<header class="major">
+							<h2>Please select Fund Transfer or Check Balance.</h2>
+						</header>
+					</div>
+				</section>
+			-->
+
+			<!-- Posts -->
+				<section id="secInputEmailAddress" class="wrapper style1">
+					<div class="container">
+						<form>
+							<h3>Serial number:</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="Cert_Serial_Number" id="Cert_Serial_Number" value="" disable />
+								</div>
+							</div>
+							<h3>Owner name:</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="Cert_Owner" id="Cert_Owner" value="" disable />
+								</div>
+							</div>
+							<h3>Issue date:</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="Cert_Create_Date" id="Cert_Create_Date" value="" disable />
+								</div>
+							</div>
+							<h3>Expiry date:</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="Cert_End_Date" id="Cert_End_Date" value="" disable />
+								</div>
+							</div>
+							<h3>Status:</h3>
+							<div class="row">
+								<div class="12u">
+									<input type="text" name="Status" id="Status" value="" disable />
+								</div>
+							</div>
+							<div class="row">
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="button" class="button alt" value="OK" onclick="window.history.back();" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+
+<script>
+
+	var idCardNumber = "";
+
+	$(function() {
+		//app.initialize();
+		idCardNumber = localStorage.getItem('idCardNumber');
+		if (beEmpty(idCardNumber)){
+			navigator.notification.alert("Unable to find your ID card or phone number, please register your certificate first!", function(){window.history.back();}, "System Message", "OK");
+		}else{
+			getMyCertificate();
+		}
+	});
+	
+	function getMyCertificate(){
+		var sData = "";
+		sData += "IdCardNumber=" + idCardNumber;
+		sData += "&ICCID=" + "phonegap";
+
+		getDataFromServer("ajaxGetMyCertificateInfo.jsp", sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+				localStorage.setItem('idCardNumber', '');
+	            navigator.notification.alert("Unable to get certificate information!", null, "System Message", "OK");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					var Cert_Serial_Number = data.Cert_Serial_Number;
+					var Cert_Owner = data.Cert_Owner;
+					var Cert_Create_Date = data.Cert_Create_Date;
+					var Cert_End_Date = data.Cert_End_Date;
+					var Status = data.Status;
+					$('#Cert_Serial_Number').value(Cert_Serial_Number);
+					$('#Cert_Owner').value(Cert_Owner);
+					$('#Cert_Create_Date').value(Cert_Create_Date);
+					$('#Cert_End_Date').value(Cert_End_Date);
+					$('#Status').value(Status);
+				}else{
+					localStorage.setItem('idCardNumber', '');
+		            navigator.notification.alert("Fail to get certificate information: " + data.resultText, null, "System Message", "OK");
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+
+	}
+</script>
+
