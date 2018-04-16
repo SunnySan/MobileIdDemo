@@ -26,7 +26,9 @@
 	<platform name="ios">
 		<resource-file src="GoogleService-Info.plist" />
 	</platform>
-    <plugin name="phonegap-plugin-push" spec="2.0.0" />
+    <plugin name="phonegap-plugin-push" spec="2.0.0" >
+    	<param name="SENDER_ID" value="99999"/>
+    </plugin>
 	<platform name="android">
 		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
 		<icon density="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
