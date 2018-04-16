@@ -126,7 +126,6 @@
 
 		getDataFromServer("ajaxGetMyCertificateInfo.jsp", sData, "json", function(data){
 			if (!data.resultCode || !data.resultText){
-				localStorage.setItem('idCardNumber', '');
 	            navigator.notification.alert("Unable to get certificate information!", null, "System Message", "OK");
 				return;
 			}else{
