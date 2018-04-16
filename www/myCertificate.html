@@ -119,6 +119,7 @@
 	});
 	
 	function getMyCertificate(){
+		alert("getMyCertificate");
 		var sData = "";
 		sData += "IdCardNumber=" + idCardNumber;
 		sData += "&ICCID=" + "phonegap";
@@ -142,8 +143,9 @@
 					$('#Cert_End_Date').val(Cert_End_Date);
 					$('#Status').val(Status);
 					alert($('#Status').val());
+				}else if (data.resultCode=="00006"){
+					window.plugins.toast.show('No data found!', 'short', 'bottom', null, null);
 				}else{
-					localStorage.setItem('idCardNumber', '');
 		            navigator.notification.alert("Fail to get certificate information: " + data.resultText, null, "System Message", "OK");
 				}
 			}
