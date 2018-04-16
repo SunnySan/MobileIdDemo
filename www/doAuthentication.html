@@ -104,7 +104,7 @@
 		Service_Name = getParameterByName("Service_Name");
 		Message_Content = getParameterByName("Message_Content");
 		Action = getParameterByName("Action");
-		var idCardNumber = localStorage.getItem('idCardNumber');
+		idCardNumber = localStorage.getItem('idCardNumber');
 		if (beEmpty(idCardNumber)){
 			navigator.notification.alert("Unable to find your ID card or phone number, please register your certificate first!", function(){window.history.back();}, "System Message", "OK");
 		}
