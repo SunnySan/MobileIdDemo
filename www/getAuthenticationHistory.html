@@ -107,13 +107,17 @@
 
 	$(function() {
 		//app.initialize();
+		document.addEventListener("deviceready", initPage, false);
+	});
+
+	function initPage(){
 		idCardNumber = localStorage.getItem('idCardNumber');
 		if (beEmpty(idCardNumber)){
 			navigator.notification.alert("Unable to find your ID card or phone number, please register your certificate first!", function(){window.history.back();}, "System Message", "OK");
 		}else{
 			getAuthenticationHistory();
 		}
-	});
+	}
 	
 	function getAuthenticationHistory(){
 		var sData = "";

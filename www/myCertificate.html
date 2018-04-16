@@ -123,7 +123,6 @@
 	}
 	
 	function getMyCertificate(){
-		alert("getMyCertificate");
 		var sData = "";
 		sData += "IdCardNumber=" + idCardNumber;
 		sData += "&ICCID=" + "phonegap";
@@ -139,13 +138,11 @@
 					var Cert_Create_Date = data.Cert_Create_Date;
 					var Cert_End_Date = data.Cert_End_Date;
 					var Status = data.Status;
-					alert(Cert_Serial_Number);
 					$('#Cert_Serial_Number').val(Cert_Serial_Number);
 					$('#Cert_Owner').val(Cert_Owner);
 					$('#Cert_Create_Date').val(Cert_Create_Date);
 					$('#Cert_End_Date').val(Cert_End_Date);
 					$('#Status').val(Status);
-					alert($('#Status').val());
 				}else if (data.resultCode=="00006"){
 					window.plugins.toast.show('No data found!', 'short', 'bottom', null, null);
 				}else{
