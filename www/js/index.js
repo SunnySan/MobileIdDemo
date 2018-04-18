@@ -71,8 +71,8 @@ var app = {
 		push.on('registration', (data) => {
 			// data.registrationId
 			//alert("registration" + data.registrationId);
-            console.log('Sunny:¡@registration event, registrationId: ' + data.registrationId);
-            console.log('Sunny:¡@registration event, registrationType: ' + data.registrationType);
+            console.log('Sunny:registration event, registrationId: ' + data.registrationId);
+            console.log('Sunny:registration event, registrationType: ' + data.registrationType);
 
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
