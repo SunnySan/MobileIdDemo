@@ -90,8 +90,8 @@ var app = {
 			// data.sound,
 			// data.image,
 			// data.additionalData
-			alert("data.message");
-            console.log('Sunny: notification event, data.message=' + data.message + ', data.title=' + data.title + ', data.count=' + data.count + ', data.additionalData.foreground=' + data.additionalData.foreground + ', data.additionalData.coldstart=' + data.additionalData.coldstart + ', data.additionalData.dismissed=' + data.additionalData.dismissed);
+			alert("data.message.notification.body");
+            console.log('Sunny: notification event, data.message.notification.body=' + data.message.notification.body + ', data.message.notification.title=' + data.message.notification.title + ', data.count=' + data.count + ', data.additionalData.foreground=' + data.additionalData.foreground + ', data.additionalData.coldstart=' + data.additionalData.coldstart + ', data.additionalData.dismissed=' + data.additionalData.dismissed);
             /*
             navigator.notification.alert(
                 data.message,         // message
