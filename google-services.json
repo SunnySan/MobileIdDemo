@@ -71,15 +71,15 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "910912356385-a56443u60jotj4jddb1erghjaib8277i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
               "client_id": "910912356385-khpk7id4mhg4h4fbtbsbsh71fs8idlio.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.taisys.demo.mobileiddemo"
               }
-            },
-            {
-              "client_id": "910912356385-a56443u60jotj4jddb1erghjaib8277i.apps.googleusercontent.com",
-              "client_type": 3
             }
           ]
         },
