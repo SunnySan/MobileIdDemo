@@ -48,10 +48,10 @@ var app = {
 		PushNotification.hasPermission(data => {
 			if (data.isEnabled) {
 		        console.log('Sunny: has Permission');
-				//alert("has Permission");
+				alert("has Permission");
 			}else{
 		        console.log('Sunny: NO Permission');
-				//alert("NO Permission");
+				alert("NO Permission");
 			}
 		});
 		const push = PushNotification.init({
@@ -90,6 +90,7 @@ var app = {
 			// data.sound,
 			// data.image,
 			// data.additionalData
+			alert("data.message");
             console.log('Sunny: notification event, data.message=' + data.message + ', data.title=' + data.title + ', data.count=' + data.count + ', data.additionalData.foreground=' + data.additionalData.foreground + ', data.additionalData.coldstart=' + data.additionalData.coldstart + ', data.additionalData.dismissed=' + data.additionalData.dismissed);
             /*
             navigator.notification.alert(
@@ -115,6 +116,7 @@ var app = {
 		});
 		
 		push.on('error', (e) => {
+			alert("e.message");
             navigator.notification.alert(
                 e.message,			// message
                 null,				// callback
