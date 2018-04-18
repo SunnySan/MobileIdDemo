@@ -90,7 +90,7 @@ var app = {
 			// data.sound,
 			// data.image,
 			// data.additionalData
-			alert("data.message.notification.body");
+			alert(data.message.notification.body);
             console.log('Sunny: notification event, data.message.notification.body=' + data.message.notification.body + ', data.message.notification.title=' + data.message.notification.title + ', data.count=' + data.count + ', data.additionalData.foreground=' + data.additionalData.foreground + ', data.additionalData.coldstart=' + data.additionalData.coldstart + ', data.additionalData.dismissed=' + data.additionalData.dismissed);
             /*
             navigator.notification.alert(
