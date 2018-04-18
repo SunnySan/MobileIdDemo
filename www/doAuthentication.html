@@ -143,12 +143,14 @@
 		getDataFromServer("ajaxTransactionResultReceiver.jsp", sData, "json", function(data){
 			if (!data.resultCode || !data.resultText){
 	            navigator.notification.alert("Unable to get process result!", null, "System Message", "OK");
+	            if (Result!="00000") window.history.back();
 				return;
 			}else{
 				if (data.resultCode=="00000"){
 					window.plugins.toast.show('The job is successfully processed!', 'long', 'bottom', function(a){window.history.back();}, function(b){navigator.notification.alert("PIN code has been changed!", function(){window.history.back();}, "System Message", "OK");});
 				}else{
 		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");
+		            if (Result!="00000") window.history.back();
 				}
 			}
 
