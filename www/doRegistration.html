@@ -122,10 +122,13 @@
 			return;
 		}
 
+		var sPlatform = device.platform;
+		
 		var sData = "";
 		sData += "iccid=" + "phonegap";
 		sData += "&idCardNumber=" + idCardNumber;
 		sData += "&fcmToken=" + fcmToken;
+		sData += "&platform=" + sPlatform;
 
 		getDataFromServer("ajaxDoCardRegistration.jsp", sData, "json", function(data){
 			if (!data.resultCode || !data.resultText){
